@@ -7,11 +7,11 @@ import "../global.css";
 
 export default function Todo() {
   const [newTask, setNewTask] = useState("");
-  const [tasks, setTasks] = useState(JSON.parse(window.localStorage.getItem("tasks") ?? []));
+  const [tasks, setTasks] = useState(JSON.parse(window.localStorage.getItem("tasks")) ?? []);
   const [view, setView] = useState("All");
   const [el, setEl] = useState("");
   const [edit, setEdit] = useState("");
-  const [now, setNow] = useState("Tambah");
+  const [now, setNow] = useState("Add");
 
   useEffect(() => {
     window.localStorage.setItem("tasks", JSON.stringify(tasks));
@@ -29,7 +29,7 @@ export default function Todo() {
 
       setTasks(editTasks);
       setEdit("");
-      setNow("Tambah");
+      setNow("Add");
 
       // window.scrollTo({
       //   top:
@@ -79,7 +79,7 @@ export default function Todo() {
   };
 
   const handleEdit = (e) => {
-    setNow("Ubah");
+    setNow("Edit");
     window.scrollTo({
       top: "0",
       left: "0",
@@ -100,7 +100,7 @@ export default function Todo() {
               value={newTask}
               onChange={(e) => setNewTask(e.target.value)}
             ></Input>
-            <Button text={now + " Tugas"} onClick={handleAddTask}></Button>
+            <Button text={now + " Task"} onClick={handleAddTask}></Button>
           </div>
         </form>
         {tasks.length > 0 ? (
@@ -122,13 +122,13 @@ export default function Todo() {
                         onClick={() => handleCompleteTask(task.id)}
                         className="px-2 py-1 border text-xs rounded"
                       >
-                        Tandai {task.completed ? "Belum Selesai" : "Selesai"}
+                        Mark as {task.completed ? "Incompleted" : "Completed"}
                       </button>
                       <button
                         onClick={() => handleRemoveTask(task.id)}
                         className="px-2 py-1 border text-xs rounded"
                       >
-                        Hapus
+                        Delete
                       </button>
                     </div>
                   </li>
@@ -151,13 +151,13 @@ export default function Todo() {
                           onClick={() => handleCompleteTask(task.id)}
                           className="px-2 py-1 border text-xs"
                         >
-                          Tandai {task.completed ? "Belum Selesai" : "Selesai"}
+                          Mark as {task.completed ? "Incompleted" : "Completed"}
                         </button>
                         <button
                           onClick={() => handleRemoveTask(task.id)}
                           className="px-2 py-1 border text-xs"
                         >
-                          Hapus
+                          Delete
                         </button>
                       </div>
                     </li>
@@ -167,13 +167,13 @@ export default function Todo() {
       </Card.Body>
       <Card.Footer>
         <button className="button active 0" onClick={(e) => handleSelect("All", 0)}>
-          Semua
+          All
         </button>
         <button className="button 1" onClick={(e) => handleSelect(false, 1)}>
-          Belum Selesai
+          Incomplete
         </button>
         <button className="button 2" onClick={(e) => handleSelect(true, 2)}>
-          Selesai
+          Complete
         </button>
       </Card.Footer>
     </Card>
